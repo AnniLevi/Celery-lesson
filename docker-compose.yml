@@ -48,8 +48,12 @@ services:
       - db_keys.txt
     depends_on:
       - redis
-    command: bash -c "celery -A testprj worker -c 5 -l info -B"
+    ports:
+      - '5555:5555'
+    command: bash -c "celery -A testprj worker -c 5 -l info -B & celery flower -A testprj"
     # -c 5 -- запуск 5 воркеров
     # -l info -- логирование уровня info
     # -B -- celery beat для запуска по таймеру
+    # celery flower -A -- для мониторинга
+    # && - параллельно, & - последовательно
     
