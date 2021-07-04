@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from os import environ
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -142,10 +143,19 @@ CELERY_BROKER_URL = 'redis://redis:6379'  # очередь задач, кото�
 
 
 CELERY_BEAT_SCHEDULE = {
-    'task_one': {           # имя может быть любым
+    # 'task_one': {           # имя может быть любым
+    #     'task': 'bigdeal.tasks.timer',
+    #     'schedule': 3       # будет запускаться каждые 3 секунды
+    # },
+    'task_one': {
         'task': 'bigdeal.tasks.timer',
-        'schedule': 3       # будет запускаться каждые 3 секунды
+        'schedule': crontab(minute='*/15')  # for every quarter of minute
+        # crontab(minute='*', hour='*', day_of_week='*', day_of_month='*', month_of_year='*', **kwargs)
+        # * - любое
+        # https://docs.celeryproject.org/en/stable/reference/celery.schedules.html
     },
+        # можно также установить 'schedule': timedelta(seconds=30)
+
     # 'task_two': {
     #     ...
     # }
