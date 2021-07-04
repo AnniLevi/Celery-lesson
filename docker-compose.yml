@@ -49,5 +49,6 @@ services:
     depends_on:
       - redis
     command: bash -c "celery -A testprj worker -c 5 -l info"
+    # запуск 5 воркеров
     # логирование уровня info
     
