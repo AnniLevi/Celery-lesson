@@ -130,6 +130,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 # Celery Configuration Options
 CELERY_TIMEZONE = "Australia/Tasmania"  # таймзона для запуска celery по таймеру
 CELERY_TASK_TRACK_STARTED = True
@@ -138,3 +139,14 @@ CELERY_TASK_TIME_LIMIT = 20  # задачи, которые выполняютс
 CELERY_BROKER_URL = 'redis://redis:6379'  # очередь задач, которые нужно решить. Redis просто хранит эти данные
 # CELERY_RESULT_BACKEND = 'redis://redis:6379'  # результаты решения задач
 # результат решения будет храниться в БД
+
+
+CELERY_BEAT_SCHEDULE = {
+    'task_one': {           # имя может быть любым
+        'task': 'bigdeal.tasks.timer',
+        'schedule': 3       # будет запускаться каждые 3 секунды
+    },
+    # 'task_two': {
+    #     ...
+    # }
+}

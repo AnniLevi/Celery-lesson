@@ -2,6 +2,7 @@ from celery import shared_task
 from bigdeal.models import Task
 from time import sleep
 from json import dumps
+from datetime import datetime
 
 
 @shared_task  # функция будет запускаться в рамках отдельного процесса, которым будет заниматься celery
@@ -16,3 +17,8 @@ def func_task(task_id, value):
         task.text = repr(exc)
         task.success = False
     task.save()
+
+
+@shared_task
+def timer():
+    return f'Hello from timer {datetime.now()}'

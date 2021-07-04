@@ -48,7 +48,8 @@ services:
       - db_keys.txt
     depends_on:
       - redis
-    command: bash -c "celery -A testprj worker -c 5 -l info"
-    # запуск 5 воркеров
-    # логирование уровня info
+    command: bash -c "celery -A testprj worker -c 5 -l info -B"
+    # -c 5 -- запуск 5 воркеров
+    # -l info -- логирование уровня info
+    # -B -- celery beat для запуска по таймеру
     
